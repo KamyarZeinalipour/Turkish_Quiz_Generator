@@ -24,6 +24,15 @@ Getting Started
 1. Clone this repository: `git clone https://github.com/your-username/code-completion-generation.git`
 2. Install the required libraries: `pip install -r requirements.txt`
 
+### Model Downloads
+The following models are available for download:
+
+- TR_QUIZ_GEN_MULTI_LLAMA7B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B)
+- TR_QUIZ_GEN_MULTI_LLAMA13B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA13B)
+- TR_QUIZ_GEN_SIMPLE_LLAMA7B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA7B)
+- TR_QUIZ_GEN_SIMPLE_LLAMA13B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA13B)
+
+
 ### Usage
 
 1. Prepare an input file containing prompts in a CSV format with a single column named "text".
