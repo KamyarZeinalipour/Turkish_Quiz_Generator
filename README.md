@@ -1,7 +1,7 @@
-# Turkish_Quiz_Gen
+# Automating Turkish Educational Quiz Generation Using Large Language Models
 
 
-[[`Paper`](paper_link)] [[`Turkish-Quiz-Instruct Dataset`](https://huggingface.co/datasets/Kamyar-zeinalipour/Turkish-Quiz-Instruct)] [[`BibTeX`](#citing-a-turkish-educational-quiz-generator)] 
+[[`Paper`](https://arxiv.org/abs/2406.03397)] [[`Turkish-Quiz-Instruct Dataset`](https://huggingface.co/datasets/Kamyar-zeinalipour/Turkish-Quiz-Instruct)] [[`BibTeX`](#citing-a-turkish-educational-quiz-generator)] 
 
 
 Code Completion Generation using Pre-trained Models
@@ -65,21 +65,21 @@ This project is licensed under the MIT License. See [MIT License](LICENSE) for d
 Contributing
 ------------
 
-A Turkish Educational Quiz Generator paper was made possible with the help of many contributors (alphabetical):
+Automating Turkish Educational Quiz Generation Using Large Language Models paper was made possible with the help of many contributors (alphabetical):
 
-Kamyar Zeinalipour, Leonardo Rigutini, Marco Gori, Marco Maggini, Yusuf Gökberk Keptiğ
+Kamyar Zeinalipour, Marco Gori, Marco Maggini, Yusuf Gökberk Keptiğ
 
 Citing A Turkish Educational Quiz Generator
 ------------
 
 ```
-@misc{zeinalipour2024turkish,
-      title={A Turkish Educational Crossword Puzzle Generator}, 
-      author={Kamyar Zeinalipour and Yusuf Gökberk Keptiğ and Marco Maggini and Leonardo Rigutini and Marco Gori},
+@misc{zeinalipour2024automating,
+      title={Automating Turkish Educational Quiz Generation Using Large Language Models}, 
+      author={Kamyar Zeinalipour and Yusuf Gökberk Keptiğ and Marco Maggini and Marco Gori},
       year={2024},
-      eprint={2405.07035},
+      eprint={2406.03397},
       archivePrefix={arXiv},
-      primaryClass={cs.CL}
+      primaryClass={id='cs.CL' full_name='Computation and Language' is_active=True alt_name='cmp-lg' in_archive='cs' is_general=False description='Covers natural language processing. Roughly includes material in ACM Subject Class I.2.7. Note that work on artificial languages (programming languages, logics, formal systems) that does not explicitly address natural-language issues broadly construed (natural-language processing, computational linguistics, speech, text retrieval, etc.) is not appropriate for this area.'}
 }
 ```
 Acknowledgments
