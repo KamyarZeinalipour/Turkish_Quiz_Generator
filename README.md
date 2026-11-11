@@ -1,76 +1,93 @@
 # Automating Turkish Educational Quiz Generation Using Large Language Models
 
+[![Paper](https://img.shields.io/badge/ISPR_2024-paper-b31b1b)](https://arxiv.org/abs/2406.03397)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97_Dataset-Turkish--Quiz--Instruct-yellow)](https://huggingface.co/datasets/Kamyar-zeinalipour/Turkish-Quiz-Instruct)
+[![Models](https://img.shields.io/badge/%F0%9F%A4%97_Collection-4_models-orange)](https://huggingface.co/collections/Kamyar-zeinalipour/turkish-educational-quiz-generation-ispr-2024-6af4852f9293af6e63c1acda)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[[`Paper`](https://arxiv.org/abs/2406.03397)] [[`Turkish-Quiz-Instruct Dataset`](https://huggingface.co/datasets/Kamyar-zeinalipour/Turkish-Quiz-Instruct)] [[`BibTeX`](#citing-a-turkish-educational-quiz-generator)] 
+Generate educational quiz questions in Turkish from any Turkish text. Given a passage, the models
+write **multiple-choice** or **short-answer** questions for it. They were fine-tuned on
+**Turkish-Quiz-Instruct**, 4,023 Turkish educational texts paired with generated questions across
+school subjects.
 
+This repository accompanies the paper
+[*Automating Turkish Educational Quiz Generation Using Large Language Models*](https://arxiv.org/abs/2406.03397)
+(ISPR 2024). Everything is collected in the
+[Turkish Educational Quiz Generation collection](https://huggingface.co/collections/Kamyar-zeinalipour/turkish-educational-quiz-generation-ispr-2024-6af4852f9293af6e63c1acda).
 
-Code Completion Generation using Pre-trained Models
-=====================================================
+## Models
 
-This repository contains a Python script that generates code completions using pre-trained models. The script takes an input file containing prompts, generates code completions using a pre-trained model, and saves the output to a specified file.
+| Task | Model | Adapter |
+|---|---|---|
+| Multiple-choice | Llama-2-7b-chat | [TR_QUIZ_GEN_MULTI_LLAMA7B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B) |
+| Multiple-choice | Llama-2-13b-chat | [TR_QUIZ_GEN_MULTI_LLAMA13B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA13B) |
+| Short-answer | Llama-2-7b-chat | [TR_QUIZ_GEN_SIMPLE_LLAMA7B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA7B) |
+| Short-answer | Llama-2-13b-chat | [TR_QUIZ_GEN_SIMPLE_LLAMA13B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA13B) |
 
-Getting Started
----------------
+## Results
 
-### Prerequisites
+**Multiple-choice questions** (ROUGE-1 / ROUGE-2 / ROUGE-L, base → fine-tuned):
 
-* `Python 3.7` or later
-* `PyTorch 1.9` or later
-* Transformers library (install with `pip install transformers`)
-* PEFT library (install with `pip install peft`)
+| Model | ROUGE-1 | ROUGE-2 | ROUGE-L |
+|---|---|---|---|
+| Llama-2-7b-chat | 4.71 → **17.33** | 1.42 → **2.88** | 3.88 → **12.11** |
+| Llama-2-13b-chat | 5.33 → **24.34** | 1.73 → **11.44** | 4.28 → **19.75** |
+| GPT-3.5-Turbo | 27.53 → **36.64** | 13.18 → **20.36** | 21.38 → **28.82** |
 
-### Installation
+**Short-answer questions**:
 
-1. Clone this repository: `git clone https://github.com/your-username/code-completion-generation.git`
-2. Install the required libraries: `pip install -r requirements.txt`
+| Model | ROUGE-1 | ROUGE-2 | ROUGE-L |
+|---|---|---|---|
+| Llama-2-7b-chat | 3.31 → **54.37** | 1.04 → **47.33** | 2.86 → **49.01** |
+| Llama-2-13b-chat | 3.81 → **52.99** | 1.33 → **46.88** | 3.22 → **49.54** |
+| GPT-3.5-Turbo | 28.19 → **45.31** | 15.87 → **31.59** | 22.22 → **40.32** |
 
-### Model Downloads
-The following models are available for download:
+Human evaluation by native Turkish speakers is reported in the paper.
 
-- TR_QUIZ_GEN_MULTI_LLAMA7B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B)
-- TR_QUIZ_GEN_MULTI_LLAMA13B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA13B)
-- TR_QUIZ_GEN_SIMPLE_LLAMA7B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA7B)
-- TR_QUIZ_GEN_SIMPLE_LLAMA13B: [Download](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA13B)
+## Installation
 
-
-### Usage
-
-1. Prepare an input file containing prompts in a CSV format with a single column named "text".
-2. Run the script using the following command:
+```bash
+git clone https://github.com/KamyarZeinalipour/Turkish_Quiz_Generator.git
+cd Turkish_Quiz_Generator
+pip install torch transformers peft pandas
+huggingface-cli login   # the Llama 2 base models are gated
 ```
-python quiz_gen_main.py --model_path <path-to-pre-trained-model> --input_file <input-file.csv> --output_file <output-file.csv> --temperature <temperature-value>
+
+Python 3.7+ and a CUDA GPU are recommended.
+
+## Usage
+
+Prepare a CSV with a single column named `text`, containing the Turkish passages:
+
+```bash
+python quiz_gen_main.py \
+  --model_path Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B \
+  --input_file input.csv \
+  --output_file output.csv \
+  --temperature 0.2
 ```
-Replace `<path-to-pre-trained-model>` with the path to your pre-trained model, `<input-file.csv>` with the path to your input file, `<output-file.csv>` with the desired output file path, and `<temperature-value>` with the desired temperature value (default is 0.2).
 
-### Example
-```
-python main.py --model_path /path/to/model --input_file input.csv --output_file output.csv --temperature 0.5
-```
+| Argument | Description |
+|---|---|
+| `--model_path` | Model to use: one of the four above, or a local path |
+| `--input_file` | Input CSV with a `text` column |
+| `--output_file` | Where to write the results |
+| `--temperature` | Sampling temperature (default `0.2`) |
 
-This will generate code completions for the prompts in `input.csv` using the pre-trained model at `/path/to/model` and save the output to `output.csv` with a temperature value of 0.5.
+The output CSV has two columns: `prompt` (the input passage) and `output` (the generated
+questions).
 
-### Output
+## Dataset
 
-The script will generate a CSV file with two columns: "prompt" and "output". The "prompt" column contains the original prompts, and the "output" column contains the generated code completions.
+[Turkish-Quiz-Instruct](https://huggingface.co/datasets/Kamyar-zeinalipour/Turkish-Quiz-Instruct):
+4,023 rows with `content` (the Turkish text), `multiple_questions`, `short_questions`, `subject`
+and `subsubtopic`.
 
-### Troubleshooting
-
-If you encounter any issues or errors, please check the console output for error messages or raise an issue on this repository.
-
-License
--------
-
-This project is licensed under the MIT License. See [MIT License](LICENSE) for details.
-
-Contributing
-------------
-
-Automating Turkish Educational Quiz Generation Using Large Language Models paper was made possible with the help of many contributors (alphabetical):
+## Contributors
 
 Kamyar Zeinalipour, Marco Gori, Marco Maggini, Yusuf Gökberk Keptiğ
 
-Citing A Turkish Educational Quiz Generator
-------------
+## Citation
 
 ```
 @misc{zeinalipour2024automating,
@@ -91,3 +108,7 @@ This project uses the following libraries:
 * PEFT: https://github.com/huggingface/peft
 
 Please cite the original authors of these libraries if you use this code in your research or projects.
+
+## License
+
+MIT, see [LICENSE](LICENSE). The models follow the Llama 2 Community License.
