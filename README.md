@@ -87,6 +87,40 @@ and `subsubtopic`.
 
 Kamyar Zeinalipour, Marco Gori, Marco Maggini, Yusuf Gökberk Keptiğ
 
+<!-- hf-usage -->
+## Load the models and data from Hugging Face
+
+Everything released with the paper is in the Hugging Face collection [Turkish Educational Quiz Generation (ISPR 2024)](https://huggingface.co/collections/Kamyar-zeinalipour/turkish-educational-quiz-generation-ispr-2024-6af4852f9293af6e63c1acda).
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("Kamyar-zeinalipour/Turkish-Quiz-Instruct")
+```
+
+The fine-tuned models are LoRA adapters. `AutoPeftModelForCausalLM` downloads the base model named in the adapter's configuration and applies the adapter on top of it:
+
+```python
+import torch
+from peft import AutoPeftModelForCausalLM
+from transformers import AutoTokenizer
+
+repo = "Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B"
+tokenizer = AutoTokenizer.from_pretrained("Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B")
+model = AutoPeftModelForCausalLM.from_pretrained(repo, torch_dtype=torch.bfloat16, device_map="auto")
+```
+
+| Adapter | Base model |
+|---|---|
+| [TR_QUIZ_GEN_MULTI_LLAMA7B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA7B) | [meta-llama/Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |
+| [TR_QUIZ_GEN_MULTI_LLAMA13B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_MULTI_LLAMA13B) | [meta-llama/Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) |
+| [TR_QUIZ_GEN_SIMPLE_LLAMA7B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA7B) | [meta-llama/Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |
+| [TR_QUIZ_GEN_SIMPLE_LLAMA13B](https://huggingface.co/Kamyar-zeinalipour/TR_QUIZ_GEN_SIMPLE_LLAMA13B) | [meta-llama/Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) |
+
+Some base models (Llama, Gemma, Mistral Small/Nemo) are gated: accept their licence on their Hugging Face page and log in with `huggingface-cli login` before loading.
+
+<!-- /hf-usage -->
+
 ## Citation
 
 ```
